@@ -17,9 +17,10 @@ RUN apt-get clean && \
 
 # Install pip requirements
 COPY requirements.txt .
+RUN pip install --upgrade pip
 RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
 COPY . /app
 
-CMD ["streamlit", "run", "main.py"]
+ENTRYPOINT ["streamlit", "run", "main.py"]
