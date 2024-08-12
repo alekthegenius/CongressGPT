@@ -1,0 +1,21 @@
+services:
+  congress_ollama:
+    volumes:
+      - ./ollama:/root/.ollama
+      - ./entrypoint.sh:/entrypoint.sh
+    container_name: congress_ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
+    ports:
+      - "11434:11434"
+    entrypoint: ["/usr/bin/bash", "/entrypoint.sh"]
+  congressgpt:
+    container_name: congressgpt
+    build:
+      context: .
+      platforms:
+        - "linux/amd64"
+    ports:
+      - "8501:8501"
